@@ -16,7 +16,6 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-
 package org.apache.iceberg.flink.actions;
 
 import java.util.List;
@@ -51,7 +50,8 @@ public class RewriteDataFilesAction extends BaseRewriteDataFilesAction<RewriteDa
     int size = combinedScanTasks.size();
     int parallelism = Math.min(size, maxParallelism);
     DataStream<CombinedScanTask> dataStream = env.fromCollection(combinedScanTasks);
-    RowDataRewriter rowDataRewriter = new RowDataRewriter(table(), caseSensitive(), fileIO(), encryptionManager());
+    RowDataRewriter rowDataRewriter =
+        new RowDataRewriter(table(), caseSensitive(), fileIO(), encryptionManager());
     try {
       return rowDataRewriter.rewriteDataForTasks(dataStream, parallelism);
     } catch (Exception e) {
@@ -65,7 +65,7 @@ public class RewriteDataFilesAction extends BaseRewriteDataFilesAction<RewriteDa
   }
 
   public RewriteDataFilesAction maxParallelism(int parallelism) {
-    Preconditions.checkArgument(parallelism > 0, "Invalid max parallelism %d", parallelism);
+    Preconditions.checkArgument(parallelism > 0, "Invalid max parallelism %s", parallelism);
     this.maxParallelism = parallelism;
     return this;
   }
